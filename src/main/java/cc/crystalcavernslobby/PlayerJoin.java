@@ -11,6 +11,7 @@ import java.io.File;
 import java.util.UUID;
 
 import static cc.crystalcavernslobby.CrystalCavernsLobby.perms;
+import static cc.crystalcavernslobby.CrystalCavernsLobby.toSend;
 
 public class PlayerJoin implements Listener {
     @EventHandler
@@ -20,6 +21,7 @@ public class PlayerJoin implements Listener {
         File player_file = new File("/home/container/world/playerdata/" + uuid + ".dat");
         Location spawn = new Location(Bukkit.getWorld("world"),0.5,222,0.5,0,0);
         player.teleport(spawn);
+        toSend.add(uuid);
         if (!player_file.exists()) {
             CrystalCavernsLobby.getPermissions();
             perms.playerAdd("global", player, "prefix.1000.&f􃼛");
