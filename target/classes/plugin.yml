@@ -1,0 +1,14 @@
+name: CrystalCavernsLobby
+author: japicraft
+version: '1.0'
+main: cc.crystalcavernslobby.CrystalCavernsLobby
+api-version: 1.19
+depend: [PlaceholderAPI,Vault,CommandPanels]
+commands:
+  claim:
+    description: Used to claim a voucher.
+  profile:
+    description: Used to open a player's profile.
+  crystalcaverns:
+    description: Used to reload the plugin config.
+    permission: crystalcaverns.reload
