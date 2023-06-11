@@ -13,6 +13,7 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.Objects;
 import java.util.UUID;
 
 import static org.bukkit.Bukkit.*;
@@ -39,10 +40,15 @@ public class ProfileCommand implements CommandExecutor {
                 UUID selected_uuid = getPlayerUniqueId(args[0]);
                 File selected = new File("/home/container/world/playerdata/" + selected_uuid + ".dat");
                 if (selected.exists()) {
-                    Bukkit.dispatchCommand(console, "cpdata -s set " + player + " profile_looking_up " + args[0]);
-                    panel.open(p, PanelPosition.Top);
+                    if (Objects.requireNonNull(getPlayer(args[0])).isOnline()) {
+                        Bukkit.dispatchCommand(console, "cpdata -s set " + player + " profile_looking_up " + args[0]);
+                        panel.open(p, PanelPosition.Top);
+                    }
+                    else {
+                        p.sendMessage("§f\uDBF7\uDC35 §cPlayer is offline or in another realm.");
+                    }
                 } else {
-                    p.sendMessage("§f\uDBF7\uDC35 §cUnknown player!");
+                    p.sendMessage("§f\uDBF7\uDC35 §cPlayer hasn't joined this server yet.");
                 }
             }
             if (args.length >= 2) {
