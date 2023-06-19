@@ -1,6 +1,11 @@
-cc\crystalcavernslobby\ClaimCommand.class
+cc\crystalcavernslobby\CreditsCommand.class
 cc\crystalcavernslobby\CrystalCavernsLobby.class
+cc\crystalcavernslobby\NMS\impl\Modern.class
+cc\crystalcavernslobby\BlockPlace.class
+cc\crystalcavernslobby\PlayerJoin.class
+cc\crystalcavernslobby\ClaimCommand.class
 cc\crystalcavernslobby\ProfileCommand.class
 cc\crystalcavernslobby\PlayerInteract.class
+cc\crystalcavernslobby\NMS\ICredits.class
 cc\crystalcavernslobby\ReloadCommand.class
-cc\crystalcavernslobby\PlayerJoin.class
+cc\crystalcavernslobby\NMS\Credits.class

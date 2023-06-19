@@ -24,7 +24,8 @@ public class PlayerJoin implements Listener {
         toSend.add(uuid);
         if (!player_file.exists()) {
             CrystalCavernsLobby.getPermissions();
-            perms.playerAdd("global", player, "prefix.1000.&f􃼛");
+            perms.playerAdd("global", player, "prefix.1000.&f\uDBD6\uDC87");
+            perms.playerAdd("global", player, "meta.rank.&f\uDBCF\uDF1B");
             perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
             perms.playerAdd("global", player, "meta.profile_color.#ffffff");
             perms.playerAdd("global", player, "meta.color.#ffffff");

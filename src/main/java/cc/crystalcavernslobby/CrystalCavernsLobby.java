@@ -1,5 +1,6 @@
 package cc.crystalcavernslobby;
 
+import cc.crystalcavernslobby.NMS.Credits;
 import de.themoep.minedown.MineDown;
 import me.clip.placeholderapi.PlaceholderAPI;
 import net.md_5.bungee.api.ChatMessageType;
@@ -31,10 +32,13 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("crystalcaverns")).setExecutor(new ReloadCommand());
         Objects.requireNonNull(getCommand("claim")).setExecutor(new ClaimCommand());
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
+        Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
+        getServer().getPluginManager().registerEvents(new BlockPlace(),this);
         getLogger().info("Crystal Caverns Lobby plugin loaded successfully!");
         setupPermissions();
+        Credits.init();
         plugin = this;
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
