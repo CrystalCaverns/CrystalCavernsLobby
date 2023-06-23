@@ -3,7 +3,7 @@ author: japicraft
 version: '1.0'
 main: cc.crystalcavernslobby.CrystalCavernsLobby
 api-version: 1.19
-depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib]
+depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms,DiscordSRV]
 commands:
   claim:
     description: Used to claim a special voucher code.
@@ -11,6 +11,8 @@ commands:
     description: Shows a given player's profile.
   credits:
     description: Displays all the awesome people who worked on the Crystal Caverns project.
+  homes:
+    description: Opens the Homes menu.
   crystalcaverns:
     description: Reloads the Crystal Caverns plugin's config.
     permission: crystalcaverns.reload

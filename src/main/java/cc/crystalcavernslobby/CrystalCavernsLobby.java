@@ -33,6 +33,7 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("claim")).setExecutor(new ClaimCommand());
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
         Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
+        Objects.requireNonNull(getCommand("homes")).setExecutor(new HomesCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
         getServer().getPluginManager().registerEvents(new BlockPlace(),this);

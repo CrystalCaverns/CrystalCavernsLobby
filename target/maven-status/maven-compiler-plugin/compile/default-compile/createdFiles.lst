@@ -5,6 +5,7 @@ cc\crystalcavernslobby\BlockPlace.class
 cc\crystalcavernslobby\PlayerJoin.class
 cc\crystalcavernslobby\ClaimCommand.class
 cc\crystalcavernslobby\ProfileCommand.class
+cc\crystalcavernslobby\HomesCommand.class
 cc\crystalcavernslobby\PlayerInteract.class
 cc\crystalcavernslobby\NMS\ICredits.class
 cc\crystalcavernslobby\ReloadCommand.class
