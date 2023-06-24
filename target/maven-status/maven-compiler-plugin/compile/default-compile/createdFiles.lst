@@ -1,6 +1,8 @@
 cc\crystalcavernslobby\CreditsCommand.class
+cc\crystalcavernslobby\TreasuryCommand.class
 cc\crystalcavernslobby\CrystalCavernsLobby.class
 cc\crystalcavernslobby\NMS\impl\Modern.class
+cc\crystalcavernslobby\BattlePassCommand.class
 cc\crystalcavernslobby\BlockPlace.class
 cc\crystalcavernslobby\PlayerJoin.class
 cc\crystalcavernslobby\ClaimCommand.class

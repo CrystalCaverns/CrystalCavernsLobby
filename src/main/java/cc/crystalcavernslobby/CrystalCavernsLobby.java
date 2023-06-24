@@ -34,6 +34,8 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
         Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
         Objects.requireNonNull(getCommand("homes")).setExecutor(new HomesCommand());
+        Objects.requireNonNull(getCommand("treasury")).setExecutor(new TreasuryCommand());
+        Objects.requireNonNull(getCommand("battlepass")).setExecutor(new BattlePassCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
         getServer().getPluginManager().registerEvents(new BlockPlace(),this);
