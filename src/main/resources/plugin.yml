@@ -17,6 +17,9 @@ commands:
     description: Opens the your Treasury.
   battlepass:
     description: Opens the Battle Pass menu.
+  switchserver:
+    description: Used by other plugins to send players across realms.
+    permission: crystalcaverns.switchserver
   crystalcaverns:
     description: Reloads the Crystal Caverns plugin's config.
     permission: crystalcaverns.reload

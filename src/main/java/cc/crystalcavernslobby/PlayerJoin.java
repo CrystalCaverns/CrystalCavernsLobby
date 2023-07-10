@@ -1,5 +1,8 @@
 package cc.crystalcavernslobby;
 
+import de.themoep.minedown.MineDown;
+import me.clip.placeholderapi.PlaceholderAPI;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -10,8 +13,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import java.io.File;
 import java.util.UUID;
 
-import static cc.crystalcavernslobby.CrystalCavernsLobby.perms;
-import static cc.crystalcavernslobby.CrystalCavernsLobby.toSend;
+import static cc.crystalcavernslobby.CrystalCavernsLobby.*;
 
 public class PlayerJoin implements Listener {
     @EventHandler
@@ -31,5 +33,18 @@ public class PlayerJoin implements Listener {
             perms.playerAdd("global", player, "meta.color.#ffffff");
             perms.playerAdd("global", player, "suffix.1000.&f");
         }
+        Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {
+        String discord_link = "%discordsrv_user_islinked%";
+        discord_link = PlaceholderAPI.setPlaceholders(player,discord_link);
+        if (discord_link.equals("no")) {
+            String message = "\uDBC9\uDF2A &#7289da&Hey there friend! Looks like you haven't yet linked your Minecraft and Discord accounts. It only takes a minute and gets you a super cool badge. Link your accounts with '/discord link'!";
+            TextComponent formatted_message = new TextComponent(MineDown.parse(message));
+            player.sendMessage(formatted_message);
+        }
+        if (!perms.playerInGroup(player,"booster") && discord_link.equals("yes")) {
+            String message = "\uDBC9\uDF2A &#7289da&Did you know you can get super awesome rewards for boosting our Discord server? Well it's absolutely true!";
+            TextComponent formatted_message = new TextComponent(MineDown.parse(message));
+            player.sendMessage(formatted_message);
+        }}, 100L);
     }
 }

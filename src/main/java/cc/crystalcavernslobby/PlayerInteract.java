@@ -39,10 +39,11 @@ public class PlayerInteract implements Listener {
             Player p = e.getPlayer();
             if (p.getEyeLocation().getBlock().getType().equals(Material.STRUCTURE_VOID)) {
                 CommandPanelsAPI api = CommandPanels.getAPI();
-                if (!api.isPanelOpen(p)) {
+                if (!api.isPanelOpen(p) && !p.getScoreboardTags().contains("inside_portal")) {
                     File file = new File("/home/container/plugins/CommandPanels/panels/portal.yml");
                     Panel panel = new Panel(file, "portal");
                     panel.open(p, PanelPosition.Top);
+                    p.addScoreboardTag("inside_portal");
                 }
             }
         }
