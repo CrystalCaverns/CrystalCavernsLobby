@@ -2,10 +2,13 @@ cc\crystalcavernslobby\CreditsCommand.class
 cc\crystalcavernslobby\MobDeath.class
 cc\crystalcavernslobby\TreasuryCommand.class
 cc\crystalcavernslobby\CrystalCavernsLobby.class
+cc\crystalcavernslobby\NPCLook.class
 cc\crystalcavernslobby\NMS\impl\Modern.class
+cc\crystalcavernslobby\MenuCommand.class
 cc\crystalcavernslobby\BattlePassCommand.class
 cc\crystalcavernslobby\BlockPlace.class
 cc\crystalcavernslobby\PlayerJoin.class
+cc\crystalcavernslobby\SpawnCommand.class
 cc\crystalcavernslobby\ClaimCommand.class
 cc\crystalcavernslobby\SwitchServerCommand.class
 cc\crystalcavernslobby\ProfileCommand.class

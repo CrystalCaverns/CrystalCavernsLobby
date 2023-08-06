@@ -1,9 +1,9 @@
 name: CrystalCavernsLobby
-author: japicraft
+author: 'japicraft'
 version: '1.0'
 main: cc.crystalcavernslobby.CrystalCavernsLobby
-api-version: 1.19
-depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms]
+api-version: '1.20'
+depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms,PlayerNPC]
 commands:
   claim:
     description: Used to claim a special voucher code.
@@ -17,6 +17,11 @@ commands:
     description: Opens the your Treasury.
   battlepass:
     description: Opens the Battle Pass menu.
+  menu:
+    description: Opens the Crystal Caverns main menu.
+  spawn:
+    description: Teleport the player to the server's global spawn point.
+    aliases: [lobby, hub]
   switchserver:
     description: Used by other plugins to send players across realms.
     permission: crystalcaverns.switchserver

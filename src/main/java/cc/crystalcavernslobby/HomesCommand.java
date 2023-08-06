@@ -1,8 +1,6 @@
 package cc.crystalcavernslobby;
 
 import me.clip.placeholderapi.PlaceholderAPI;
-import me.rockyhawk.commandpanels.CommandPanels;
-import me.rockyhawk.commandpanels.api.CommandPanelsAPI;
 import me.rockyhawk.commandpanels.api.Panel;
 import me.rockyhawk.commandpanels.openpanelsmanager.PanelPosition;
 import org.bukkit.command.Command;
@@ -20,9 +18,7 @@ public class HomesCommand implements CommandExecutor {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§cOnly a player can execute this command!");
         }
-        CommandPanelsAPI api = CommandPanels.getAPI();
         Player p = (Player) sender;
-        if (!api.isPanelOpen(p)) {
             File file = new File("/home/container/plugins/CommandPanels/panels/homes.yml");
             Panel panel = new Panel(file, "homes");
             String homes = "%huskhomes_homes_list%";
@@ -46,6 +42,6 @@ public class HomesCommand implements CommandExecutor {
             panel.placeholders.addPlaceholder("home4", Home4);
             panel.placeholders.addPlaceholder("home5", Home5);
             panel.open(p, PanelPosition.Top);
-        } return false;
+            return false;
     }
 }

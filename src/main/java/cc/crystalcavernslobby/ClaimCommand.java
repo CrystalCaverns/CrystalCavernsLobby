@@ -14,11 +14,10 @@ import java.util.Objects;
 public class ClaimCommand implements CommandExecutor {
     @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§cOnly a player can execute this command!");
             return true;
         }
-        Player p = (Player) sender;
         String player = p.getName();
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
         FileConfiguration config = CrystalCavernsLobby.getPlugin().getConfig();
