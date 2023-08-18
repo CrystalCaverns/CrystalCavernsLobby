@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -30,14 +31,18 @@ public class PlayerJoin implements Listener {
         Location spawn = new Location(Bukkit.getWorld("world"),0.5,222,0.5,0,0);
         player.teleport(spawn);
         toSend.add(uuid);
-        if (!player.hasPlayedBefore()) {
-            CrystalCavernsLobby.getPermissions();
-            perms.playerAdd("global", player, "prefix.1000.&f\uDBD6\uDC87");
-            perms.playerAdd("global", player, "meta.rank.&f\uDBCF\uDF1B");
-            perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
-            perms.playerAdd("global", player, "meta.profile_color.#ffffff");
+        CrystalCavernsLobby.getPermissions();
+        if (!perms.playerHas(player, "meta.color.#ffffff")) {
             perms.playerAdd("global", player, "meta.color.#ffffff");
-            perms.playerAdd("global", player, "suffix.1000.&f");
+        }
+        if (!perms.playerHas(player, "meta.profile_color.#ffffff")) {
+            perms.playerAdd("global", player, "meta.profile_color.#ffffff");
+        }
+        if (!perms.playerHas(player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72")) {
+            perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
+        }
+        if (!perms.playerHas(player, "suffix.1.&f")) {
+            perms.playerAdd("global", player, "suffix.1.&f");
         }
         Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {
         String discord_link = "%discordsrv_user_islinked%";
@@ -52,11 +57,10 @@ public class PlayerJoin implements Listener {
             TextComponent formatted_message = new TextComponent(MineDown.parse(message));
             player.sendMessage(formatted_message);
         }
-        if (!player.hasPlayedBefore()) {
-            ItemStack menu_shortcut = getItemStack();
-            player.getInventory().setItem(8, menu_shortcut);
-        }
-        }, 100L);
+        PlayerInventory inventory = player.getInventory();
+        if (!inventory.contains(getItemStack()) && inventory.getItem(8) == null) {
+            inventory.setItem(8, getItemStack());
+        }}, 100L);
     }
     @NotNull
     private static ItemStack getItemStack() {

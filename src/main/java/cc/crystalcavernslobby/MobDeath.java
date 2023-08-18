@@ -21,8 +21,7 @@ public class MobDeath implements Listener {
         }
         if (e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
             Entity damageEntity = ((EntityDamageByEntityEvent) e.getEntity().getLastDamageCause()).getDamager();
-            if (damageEntity instanceof Player) {
-                Player player = (Player) damageEntity;
+            if (damageEntity instanceof Player player) {
                 if (e.getEntity() instanceof Zombie) {
                     LootContext context =
                         new LootContext.Builder(e.getEntity().getLocation())
