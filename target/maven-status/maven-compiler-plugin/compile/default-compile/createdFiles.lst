@@ -3,8 +3,9 @@ cc\crystalcavernslobby\MobDeath.class
 cc\crystalcavernslobby\TreasuryCommand.class
 cc\crystalcavernslobby\CrystalCavernsLobby.class
 cc\crystalcavernslobby\NMS\impl\Modern.class
-cc\crystalcavernslobby\CustomGiveCommand.class
 cc\crystalcavernslobby\MenuCommand.class
+cc\crystalcavernslobby\StoreCommand.class
+cc\crystalcavernslobby\PlayerDropItem.class
 cc\crystalcavernslobby\BattlePassCommand.class
 cc\crystalcavernslobby\BlockPlace.class
 cc\crystalcavernslobby\PlayerJoin.class

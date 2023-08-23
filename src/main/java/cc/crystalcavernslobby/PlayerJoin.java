@@ -19,29 +19,21 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.UUID;
-
-import static cc.crystalcavernslobby.CrystalCavernsLobby.*;
+import static cc.crystalcavernslobby.CrystalCavernsLobby.perms;
 
 public class PlayerJoin implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        UUID uuid = player.getUniqueId();
         Location spawn = new Location(Bukkit.getWorld("world"),0.5,222,0.5,0,0);
         player.teleport(spawn);
-        toSend.add(uuid);
         CrystalCavernsLobby.getPermissions();
-        if (!perms.playerHas(player, "meta.color.#ffffff")) {
-            perms.playerAdd("global", player, "meta.color.#ffffff");
-        }
-        if (!perms.playerHas(player, "meta.profile_color.#ffffff")) {
-            perms.playerAdd("global", player, "meta.profile_color.#ffffff");
-        }
-        if (!perms.playerHas(player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72")) {
-            perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
-        }
         if (!perms.playerHas(player, "suffix.1.&f")) {
+            perms.playerAdd("global", player, "meta.color.#ffffff");
+            perms.playerAdd("global", player, "meta.color_name.White");
+            perms.playerAdd("global", player, "meta.profile_color.#ffffff");
+            perms.playerAdd("global", player, "meta.profile_color_name.White");
+            perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
             perms.playerAdd("global", player, "suffix.1.&f");
         }
         Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {

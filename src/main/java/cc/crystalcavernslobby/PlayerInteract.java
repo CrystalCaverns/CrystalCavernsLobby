@@ -4,36 +4,32 @@ import me.rockyhawk.commandpanels.CommandPanels;
 import me.rockyhawk.commandpanels.api.CommandPanelsAPI;
 import me.rockyhawk.commandpanels.api.Panel;
 import me.rockyhawk.commandpanels.openpanelsmanager.PanelPosition;
-import org.bukkit.*;
-import org.bukkit.entity.*;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
 import java.io.File;
 import java.util.Objects;
 
+import static cc.crystalcavernslobby.CrystalCavernsLobby.plugin;
+
 public class PlayerInteract implements Listener {
+    boolean disableInteractions = Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"));
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
-//        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-//            if (Tag.TRAPDOORS.isTagged(Objects.requireNonNull(e.getClickedBlock()).getType())) {
-//                e.setCancelled(true);
-//            }
-//            if (Tag.BUTTONS.isTagged(Objects.requireNonNull(e.getClickedBlock()).getType())) {
-//                e.setCancelled(true);
-//            }
-//            if (Tag.DOORS.isTagged(Objects.requireNonNull(e.getClickedBlock()).getType())) {
-//                e.setCancelled(true);
-//            }
-//            if (Tag.FENCE_GATES.isTagged(Objects.requireNonNull(e.getClickedBlock()).getType())) {
-//                e.setCancelled(true);
-//            }
-//            if (Material.BARREL.equals(Objects.requireNonNull(e.getClickedBlock()).getType())) {
-//                e.setCancelled(true);
-//            }
-//        }
+        if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
+            if (disableInteractions) {
+                Material clickedBlock = e.getClickedBlock().getType();
+                if (clickedBlock != Material.SMITHING_TABLE && clickedBlock != Material.GRINDSTONE && clickedBlock != Material.STONECUTTER && clickedBlock != Material.ENCHANTING_TABLE) {
+                    e.setCancelled(true);
+                }
+            }
+        }
         if (e.getAction() == Action.PHYSICAL) {
             if (Material.REDSTONE_ORE.equals(Objects.requireNonNull(e.getClickedBlock()).getType())) {
                 Player p = e.getPlayer();
@@ -47,7 +43,8 @@ public class PlayerInteract implements Listener {
                     }
                 }
             }
-        } else {
+        }
+        else {
             if (e.hasItem()) {
                 if (e.getMaterial() == Material.GHAST_TEAR) {
                     if (e.getItem().hasItemMeta()) {
@@ -68,19 +65,16 @@ public class PlayerInteract implements Listener {
             }
         }
     }
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+        if (disableInteractions) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onPlayerDamageEntity(EntityDamageByEntityEvent e) {
+        if (disableInteractions) {
+            e.setCancelled(true);
+        }
+    }
 }
-//    @EventHandler
-//    public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
-//        if (e.getRightClicked().getType().equals(EntityType.ITEM_FRAME)) {
-//            ItemFrame itemframe = (ItemFrame) e.getRightClicked();
-//            if (!(itemframe.getItem().getType().equals(Material.AIR))) {
-//                e.setCancelled(true);
-//            }
-//        }
-//        if (e.getRightClicked().getType().equals(EntityType.GLOW_ITEM_FRAME)) {
-//            GlowItemFrame glowitemframe = (GlowItemFrame) e.getRightClicked();
-//            if (!(glowitemframe.getItem().getType().equals(Material.AIR))) {
-//                e.setCancelled(true);
-//            }
-//        }
-//    }

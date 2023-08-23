@@ -8,16 +8,11 @@ import net.luckperms.api.LuckPerms;
 import net.luckperms.api.LuckPermsProvider;
 import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
-import org.bukkit.Material;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ArmorMeta;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.inventory.meta.trim.ArmorTrim;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -57,54 +52,19 @@ public class ProfileCommand implements CommandExecutor {
                 placeholders.addPlaceholder("target_player", target_player_name);
                 User lpUser = lp_api.getPlayerAdapter(Player.class).getUser(target_player);
                 CachedMetaData metaData = lpUser.getCachedData().getMetaData();
-                String profile_color = metaData.getMetaValue("profile_color") + metaData.getMetaValue("profile_color_name");
-                placeholders.addPlaceholder("profile_color", profile_color);
-                String color = metaData.getMetaValue("color") + metaData.getMetaValue("color_name");
-                placeholders.addPlaceholder("color", color);
+                //NAME
+                placeholders.addPlaceholder("profile_color", metaData.getMetaValue("profile_color"));
+                placeholders.addPlaceholder("profile_color_name", metaData.getMetaValue("profile_color_name"));
+                placeholders.addPlaceholder("color", metaData.getMetaValue("color"));
+                placeholders.addPlaceholder("color_name", metaData.getMetaValue("color_name"));
                 placeholders.addPlaceholder("rank", metaData.getMetaValue("rank"));
                 placeholders.addPlaceholder("nameplate", metaData.getMetaValue("nameplate"));
+                //DISCORD
                 String discord_link = PlaceholderAPI.setPlaceholders(target_player,"%discordsrv_user_islinked%");
                 String discord_name = PlaceholderAPI.setPlaceholders(target_player,"%discordsrv_user_name%");
                 placeholders.addPlaceholder("discord_linked", discord_link);
                 placeholders.addPlaceholder("discord_name", discord_name);
-                if (p.getInventory().getHelmet() != null) {
-                    placeholders.addPlaceholder("helmet", "true");
-                    ItemStack helmet = p.getInventory().getHelmet();
-                    placeholders.addPlaceholder("helmet_material", helmet.getType().toString());
-                    ArmorMeta helmet_meta = (ArmorMeta) helmet.getItemMeta();
-                    placeholders.addPlaceholder("helmet_name", helmet_meta.getDisplayName());
-                    if (helmet_meta.hasCustomModelData()) {
-                        placeholders.addPlaceholder("helmet_custom_data", String.valueOf(helmet_meta.getCustomModelData()));
-                    } else {
-                        placeholders.addPlaceholder("helmet_custom_data", "0");
-                    }
-                    if (helmet_meta.hasLore()) {
-                        String helmet_lore_raw = helmet_meta.getLore().toString();
-                        String helmet_lore_noStart = helmet_lore_raw.replace("[", "");
-                        String helmet_lore = helmet_lore_noStart.replace("]", "");
-                        placeholders.addPlaceholder("helmet_lore", helmet_lore);
-                    } else {
-                        placeholders.addPlaceholder("helmet_lore", "");
-                    }
-                    if (helmet.getType() == Material.LEATHER_HELMET) {
-                        LeatherArmorMeta helmet_leather = (LeatherArmorMeta) helmet.getItemMeta();
-                        placeholders.addPlaceholder("helmet_color", helmet_leather.getColor().getRed() + "," + helmet_leather.getColor().getGreen() + "," + helmet_leather.getColor().getBlue());
-                    } else {
-                        placeholders.addPlaceholder("helmet_color", "");
-                    }
-                    if (helmet_meta.hasTrim()) {
-                        ArmorTrim armorTrim = helmet_meta.getTrim();
-                        placeholders.addPlaceholder("helmet_trim", armorTrim.getMaterial() + " " + armorTrim.getPattern());
-                    } else {
-                        placeholders.addPlaceholder("helmet_trim", "");
-                    }
-                } else {
-                    placeholders.addPlaceholder("helmet", "");
-                }
-                
-                
-                
-                
+                //OPEN PANEL
                 panel.open(p, PanelPosition.Top);
             }
         } else {

@@ -12,10 +12,9 @@ import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.time.Duration;
-import java.util.*;
+import java.util.Objects;
 
 public final class CrystalCavernsLobby extends JavaPlugin {
-    public static List<UUID> toSend = new ArrayList<>();
     public static Permission perms = null;
     public static void getPermissions() {}
     private void setupPermissions() {
@@ -24,6 +23,7 @@ public final class CrystalCavernsLobby extends JavaPlugin {
     }
     @Override
     public void onEnable() {
+        plugin = this;
         saveDefaultConfig();
         Objects.requireNonNull(getCommand("crystalcaverns")).setExecutor(new ReloadCommand());
         Objects.requireNonNull(getCommand("claim")).setExecutor(new ClaimCommand());
@@ -35,7 +35,7 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("battlepass")).setExecutor(new BattlePassCommand());
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand());
         Objects.requireNonNull(getCommand("menu")).setExecutor(new MenuCommand());
-//        Objects.requireNonNull(getCommand("customgive")).setExecutor(new CustomGiveCommand());
+        Objects.requireNonNull(getCommand("store")).setExecutor(new StoreCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
         getServer().getPluginManager().registerEvents(new MobDeath(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
@@ -43,26 +43,20 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         getLogger().info("Crystal Caverns Lobby plugin loaded successfully!");
         setupPermissions();
         Credits.init();
-        plugin = this;
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-//                if (toSend.contains(player.getUniqueId())) {
-//                    String message = "&#bbbbbb&%coinsengine_balance_crystals% &white&\uDBEB\uDEEA      &#9944ff&%coinsengine_balance_gemstones% &white&\uDBCB\uDD10";
-//                    message = PlaceholderAPI.setPlaceholders(player,message);
-//                    TextComponent formatted_message = new TextComponent(MineDown.parse(message));
-//                    formatted_message.setFont("currency_display");
-//                    player.sendMessage(ChatMessageType.ACTION_BAR,formatted_message);
-//                }
                 if (player.getEyeLocation().getBlock().getType() == Material.STRUCTURE_VOID) {
                     player.showTitle(Title.title(Component.text("\uDBEA\uDDE8"),Component.empty(),Title.Times.times(Duration.ZERO,Duration.ofMillis(2000),Duration.ofMillis(500))));
                 }
                 if (player.getScoreboardTags().contains("inside_portal") && player.getEyeLocation().getBlock().getType() != Material.STRUCTURE_VOID) {
                     player.removeScoreboardTag("inside_portal");
                 }
+                if (player.getLocation().getBlockY() <= 215) {
+                    player.performCommand("spawn");
+                }
             }
         }, 30L, 30L);
     }
-    
     public static Plugin getPlugin() {
         return plugin;
     }

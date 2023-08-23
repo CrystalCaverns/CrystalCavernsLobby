@@ -23,7 +23,7 @@ public class SpawnCommand implements CommandExecutor {
             sender.setOp(is_op1);
             sender.sendMessage("SUPER RARE ERROR! PLEASE REPORT IMMEDIATELY! ID: SpawnCommand Rare Error");
         }
-        Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
             boolean is_op2 = sender.isOp();
             try {
                 sender.setOp(true);

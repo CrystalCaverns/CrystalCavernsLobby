@@ -13,12 +13,15 @@ commands:
     description: Displays all the awesome people who worked on the Crystal Caverns project.
   homes:
     description: Opens the Homes menu.
+    aliases: [waypoints, landmarks]
   treasury:
     description: Opens the your Treasury.
   battlepass:
     description: Opens the Battle Pass menu.
   menu:
     description: Opens the Crystal Caverns main menu.
+  store:
+    description: Gives a link to the Crystal Caverns store.
   spawn:
     description: Teleport the player to the server's global spawn point.
     aliases: [lobby, hub]

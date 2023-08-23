@@ -1,5 +1,1 @@
-vouchers:
-  CC-0000000000:
-    type: cap
-    meta: example
-    used: false
+disableInteractions: true

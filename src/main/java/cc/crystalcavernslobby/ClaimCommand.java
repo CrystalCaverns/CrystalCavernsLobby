@@ -5,29 +5,44 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.ConsoleCommandSender;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Objects;
 
 public class ClaimCommand implements CommandExecutor {
-    @Override
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player p)) {
             sender.sendMessage("§cOnly a player can execute this command!");
             return true;
         }
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        // NEEDS COMPLETE REWRITE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         String player = p.getName();
         ConsoleCommandSender console = Bukkit.getServer().getConsoleSender();
-        FileConfiguration config = CrystalCavernsLobby.getPlugin().getConfig();
         if (args.length == 1) {
-            if (Objects.requireNonNull(config.getConfigurationSection("vouchers")).getKeys(false).contains(args[0])) {
-                if (!config.getBoolean("vouchers." + args[0] + ".used")) {
-                    config.set("vouchers." + args[0] + ".used", true);
+            File configPath = new File("/home/container/plugins/CrystalCavernsLobby/coupons");
+            FileConfiguration couponsConfig = new YamlConfiguration();
+            try {
+                couponsConfig.load(configPath);
+            } catch (IOException | InvalidConfigurationException e) {
+                throw new RuntimeException(e);
+            }
+            if (couponsConfig.getKeys(false).contains(args[0])) {
+                if (!couponsConfig.getBoolean(args[0] + ".used")) {
+                    couponsConfig.set(args[0] + ".used", true);
                     CrystalCavernsLobby.getPlugin().saveConfig();
-                    if (Objects.equals(config.getString("vouchers." + args[0] + ".type"), "cap")) {
-                        Bukkit.dispatchCommand(console, "lp user " + player + " meta set " + (config.getString("vouchers." + args[0] + ".meta") + " 1"));
+                    if (Objects.equals(couponsConfig.getString("vouchers." + args[0] + ".type"), "cap")) {
+                        Bukkit.dispatchCommand(console, "lp user " + player + " meta set " + (couponsConfig.getString("vouchers." + args[0] + ".meta") + " 1"));
                         p.sendMessage("§f\uDBDD\uDD29 §aVoucher code redeemed successfully! Enjoy your reward.");
                     }
                 } else {
