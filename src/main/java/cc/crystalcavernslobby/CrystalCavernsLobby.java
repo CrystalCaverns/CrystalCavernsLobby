@@ -25,7 +25,7 @@ public final class CrystalCavernsLobby extends JavaPlugin {
     public void onEnable() {
         plugin = this;
         saveDefaultConfig();
-        Objects.requireNonNull(getCommand("crystalcaverns")).setExecutor(new ReloadCommand());
+        Objects.requireNonNull(getCommand("crystalcaverns")).setExecutor(new MainCommand());
         Objects.requireNonNull(getCommand("claim")).setExecutor(new ClaimCommand());
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
         Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
@@ -40,6 +40,7 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new MobDeath(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
         getServer().getPluginManager().registerEvents(new BlockPlace(),this);
+        getServer().getPluginManager().registerEvents(new PlayerDropItem(),this);
         getLogger().info("Crystal Caverns Lobby plugin loaded successfully!");
         setupPermissions();
         Credits.init();

@@ -30,4 +30,4 @@ commands:
     permission: crystalcaverns.switchserver
   crystalcaverns:
     description: Reloads the Crystal Caverns plugin's config.
-    permission: crystalcaverns.reload
+    permission: crystalcaverns.command

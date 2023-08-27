@@ -45,14 +45,23 @@ public class BattlePassCommand implements CommandExecutor {
                 panel = new Panel(file, "battle_pass_" + page);
             }
             PanelPlaceholders placeholders = panel.placeholders;
-            String progress_bar = "\uDBED\uDC5C\uDBFA\uDF35";
-            Integer level = Integer.parseInt(cachedDataManager.getMetaData().getMetaValue("battle_pass_level"));
-            Integer points = Integer.parseInt(cachedDataManager.getMetaData().getMetaValue("battle_pass_points"));
+            String progress_bar_template = "\uDBED\uDC5C\uDBFA\uDF35";
+            int points = Integer.parseInt(cachedDataManager.getMetaData().getMetaValue("battle_pass_points"));
+            double level_index = ((Math.sqrt((((double) points / 100) * 8) + 1)) - 1) / 2;
+            int level = (int) Math.floor(level_index);
+            int points_for_level = (((level + 1) * level) / 2) * 100;
+            int leftover_points = points - points_for_level;
+            int next_level = level + 1;
             double divider = 5.5555;
             int repeat = 0;
             //FIRST PAGE EXCEPTION
             if (page.equals(1)) {
                 //PROGRESS BAR
+                if (level == 0) {
+                    double progress_raw = points / divider;
+                    int progress = Math.toIntExact(Math.round(progress_raw));
+                    repeat = repeat + progress;
+                }
                 if (level >= 1) {
                     repeat = repeat + 18;
                 }
@@ -65,6 +74,7 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward0_lore4", battlePassConfig.getString("free.reward0.lore.line4"));
                 placeholders.addPlaceholder("reward0_lore5", battlePassConfig.getString("free.reward0.lore.line5"));
                 placeholders.addPlaceholder("reward0_customdata", battlePassConfig.getString("free.reward0.customdata"));
+                placeholders.addPlaceholder("reward0_command", battlePassConfig.getString("free.reward0.command"));
                 //PREMIUM REWARD
                 placeholders.addPlaceholder("premium_reward0_material", battlePassConfig.getString("premium.reward0.material"));
                 placeholders.addPlaceholder("premium_reward0_name", battlePassConfig.getString("premium.reward0.name"));
@@ -74,12 +84,18 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("premium_reward0_lore4", battlePassConfig.getString("premium.reward0.lore.line4"));
                 placeholders.addPlaceholder("premium_reward0_lore5", battlePassConfig.getString("premium.reward0.lore.line5"));
                 placeholders.addPlaceholder("premium_reward0_customdata", battlePassConfig.getString("premium.reward0.customdata"));
+                placeholders.addPlaceholder("premium_reward0_command", battlePassConfig.getString("premium.reward0.command"));
             }
             //LAST PAGE EXCEPTION
             if (page.equals(7)) {
                 //FREE REWARD
                 if (level >= 50) {
                     repeat = repeat + 18;
+                } else if (next_level == 50) {
+                    double progress_raw = (double) leftover_points / next_level;
+                    double progress_divided = progress_raw / divider;
+                    int progress = Math.toIntExact(Math.round(progress_divided));
+                    repeat = repeat + progress;
                 }
                 placeholders.addPlaceholder("reward50_material", battlePassConfig.getString("free.reward50.material"));
                 placeholders.addPlaceholder("reward50_name", battlePassConfig.getString("free.reward50.name"));
@@ -89,6 +105,7 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward50_lore4", battlePassConfig.getString("free.reward50.lore.line4"));
                 placeholders.addPlaceholder("reward50_lore5", battlePassConfig.getString("free.reward50.lore.line5"));
                 placeholders.addPlaceholder("reward50_customdata", battlePassConfig.getString("free.reward50.customdata"));
+                placeholders.addPlaceholder("reward50_command", battlePassConfig.getString("free.reward50.command"));
                 //PREMIUM REWARD
                 placeholders.addPlaceholder("premium_reward50_material", battlePassConfig.getString("premium.reward50.material"));
                 placeholders.addPlaceholder("premium_reward50_name", battlePassConfig.getString("premium.reward50.name"));
@@ -98,15 +115,48 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("premium_reward50_lore4", battlePassConfig.getString("premium.reward50.lore.line4"));
                 placeholders.addPlaceholder("premium_reward50_lore5", battlePassConfig.getString("premium.reward50.lore.line5"));
                 placeholders.addPlaceholder("premium_reward50_customdata", battlePassConfig.getString("premium.reward50.customdata"));
+                placeholders.addPlaceholder("premium_reward50_command", battlePassConfig.getString("premium.reward50.command"));
             }
             //HANDLE ALL OTHER PAGES
-            int a = points / level;
-            double b = a / divider;
-            int c = Math.toIntExact(Math.round(b));
             for (int i = 1; i <= 7; i++) {
                 int multiplier = page - 1;
                 int addend = 7 * multiplier;
                 int reward = i + addend;
+                if (level > reward && i < 7) {
+                    repeat = repeat + 18;
+                } else if (reward == level && level != 0 && i < 7) {
+                    double progress_raw = (double) leftover_points / next_level;
+                    double progress_divided = progress_raw / divider;
+                    int progress = Math.toIntExact(Math.round(progress_divided));
+                    repeat = repeat + progress;
+                }
+                if (i == 7 & page < 7) {
+                    if (level > reward) {
+                        repeat = repeat + 8;
+                    } else if (level == reward) {
+                        double progress_raw = (double) leftover_points / next_level;
+                        double progress_divided = progress_raw / divider;
+                        int progress = Math.toIntExact(Math.round(progress_divided));
+                        if (progress <= 8) {
+                            repeat = repeat + progress;
+                        } else {
+                            repeat = repeat + 8;
+                        }
+                    }
+                }
+                if (i == 1 & page > 1) {
+                    if (level >= reward) {
+                        repeat = repeat + 8;
+                    } else if (reward == next_level) {
+                        double progress_raw = (double) leftover_points / next_level;
+                        double progress_divided = progress_raw / divider;
+                        int progress = Math.toIntExact(Math.round(progress_divided));
+                        if (progress > 8) {
+                            int progress_second = progress - 8;
+                            repeat = repeat + progress_second;
+                        }
+                    }
+                }
                 //FREE REWARD
                 placeholders.addPlaceholder("reward" + reward + "_material", battlePassConfig.getString("free.reward" + reward + ".material"));
                 placeholders.addPlaceholder("reward" + reward + "_name", battlePassConfig.getString("free.reward" + reward + ".name"));
@@ -116,6 +166,7 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward" + reward + "_lore4", battlePassConfig.getString("free.reward" + reward + ".lore.line4"));
                 placeholders.addPlaceholder("reward" + reward + "_lore5", battlePassConfig.getString("free.reward" + reward + ".lore.line5"));
                 placeholders.addPlaceholder("reward" + reward + "_customdata", battlePassConfig.getString("free.reward" + reward + ".customdata"));
+                placeholders.addPlaceholder("reward" + reward + "_command", battlePassConfig.getString("free.reward" + reward + ".command"));
                 //PREMIUM REWARD
                 placeholders.addPlaceholder("premium_reward" + reward + "_material", battlePassConfig.getString("premium.reward" + reward + ".material"));
                 placeholders.addPlaceholder("premium_reward" + reward + "_name", battlePassConfig.getString("premium.reward" + reward + ".name"));
@@ -125,9 +176,11 @@ public class BattlePassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("premium_reward" + reward + "_lore4", battlePassConfig.getString("premium.reward" + reward + ".lore.line4"));
                 placeholders.addPlaceholder("premium_reward" + reward + "_lore5", battlePassConfig.getString("premium.reward" + reward + ".lore.line5"));
                 placeholders.addPlaceholder("premium_reward" + reward + "_customdata", battlePassConfig.getString("premium.reward" + reward + ".customdata"));
+                placeholders.addPlaceholder("premium_reward" + reward + "_command", battlePassConfig.getString("premium.reward" + reward + ".command"));
             }
-            progress_bar.repeat(repeat);
+            String progress_bar = progress_bar_template.repeat(repeat);
             placeholders.addPlaceholder("progress_bar", progress_bar);
+            placeholders.addPlaceholder("level", String.valueOf(level));
             panel.open(p, PanelPosition.Top);
         } else {
             p.sendMessage("§f\uDBCB\uDDAB §bCommand usage: §7/battlepass [page]");

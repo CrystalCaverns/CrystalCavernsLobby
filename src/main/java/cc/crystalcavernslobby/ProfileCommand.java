@@ -54,7 +54,8 @@ public class ProfileCommand implements CommandExecutor {
                 CachedMetaData metaData = lpUser.getCachedData().getMetaData();
                 //NAME
                 placeholders.addPlaceholder("profile_color", metaData.getMetaValue("profile_color"));
-                placeholders.addPlaceholder("profile_color_name", metaData.getMetaValue("profile_color_name"));
+                placeholders.addPlaceholder("profile_theme", metaData.getMetaValue("profile_theme"));
+                placeholders.addPlaceholder("profile_theme_name", metaData.getMetaValue("profile_theme_name"));
                 placeholders.addPlaceholder("color", metaData.getMetaValue("color"));
                 placeholders.addPlaceholder("color_name", metaData.getMetaValue("color_name"));
                 placeholders.addPlaceholder("rank", metaData.getMetaValue("rank"));

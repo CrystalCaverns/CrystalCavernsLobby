@@ -19,11 +19,10 @@ import java.util.Objects;
 import static cc.crystalcavernslobby.CrystalCavernsLobby.plugin;
 
 public class PlayerInteract implements Listener {
-    boolean disableInteractions = Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"));
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (disableInteractions) {
+            if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
                 Material clickedBlock = e.getClickedBlock().getType();
                 if (clickedBlock != Material.SMITHING_TABLE && clickedBlock != Material.GRINDSTONE && clickedBlock != Material.STONECUTTER && clickedBlock != Material.ENCHANTING_TABLE) {
                     e.setCancelled(true);
@@ -67,13 +66,13 @@ public class PlayerInteract implements Listener {
     }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
-        if (disableInteractions) {
+        if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
             e.setCancelled(true);
         }
     }
     @EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent e) {
-        if (disableInteractions) {
+        if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
             e.setCancelled(true);
         }
     }

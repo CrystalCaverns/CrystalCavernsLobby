@@ -30,10 +30,12 @@ public class PlayerJoin implements Listener {
         CrystalCavernsLobby.getPermissions();
         if (!perms.playerHas(player, "suffix.1.&f")) {
             perms.playerAdd("global", player, "meta.color.#ffffff");
-            perms.playerAdd("global", player, "meta.color_name.White");
+            perms.playerAdd("global", player, "meta.color_name.Pure White");
             perms.playerAdd("global", player, "meta.profile_color.#ffffff");
-            perms.playerAdd("global", player, "meta.profile_color_name.White");
+            perms.playerAdd("global", player, "meta.profile_theme.\uDBEE\uDD3A");
+            perms.playerAdd("global", player, "meta.profile_theme_name.Simple White");
             perms.playerAdd("global", player, "meta.nameplate.\uDBE2\uDCB1\uDBC2\uDD72");
+            perms.playerAdd("global", player, "meta.battle_pass_points.0");
             perms.playerAdd("global", player, "suffix.1.&f");
         }
         Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {

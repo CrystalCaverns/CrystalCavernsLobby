@@ -2,6 +2,7 @@ cc\crystalcavernslobby\CreditsCommand.class
 cc\crystalcavernslobby\MobDeath.class
 cc\crystalcavernslobby\TreasuryCommand.class
 cc\crystalcavernslobby\CrystalCavernsLobby.class
+cc\crystalcavernslobby\MainCommand.class
 cc\crystalcavernslobby\NMS\impl\Modern.class
 cc\crystalcavernslobby\MenuCommand.class
 cc\crystalcavernslobby\StoreCommand.class
@@ -17,5 +18,4 @@ cc\crystalcavernslobby\HomesCommand.class
 cc\crystalcavernslobby\PlayerInteract.class
 cc\crystalcavernslobby\BossLoot.class
 cc\crystalcavernslobby\NMS\ICredits.class
-cc\crystalcavernslobby\ReloadCommand.class
 cc\crystalcavernslobby\NMS\Credits.class
