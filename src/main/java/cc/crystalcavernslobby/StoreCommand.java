@@ -3,6 +3,9 @@ package cc.crystalcavernslobby;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.TextComponent;
 import net.kyori.adventure.text.event.ClickEvent;
+import net.kyori.adventure.text.format.NamedTextColor;
+import net.kyori.adventure.text.format.TextColor;
+import net.kyori.adventure.text.format.TextDecoration;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -16,12 +19,18 @@ public class StoreCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
         if (args.length == 0) {
-            TextComponent message = Component.text("Click here to visit our store: store.crystalcaverns.net")
-                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://store.crystalcaverns.net"));
+            TextComponent message = Component.text("\uDBE6\uDE59 ")
+                .color(NamedTextColor.WHITE)
+                .decoration(TextDecoration.ITALIC,false)
+                .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://store.crystalcaverns.net"))
+                .append(Component.text("Click to visit our store at store.crystalcaverns.net!"))
+                    .color(TextColor.color(31743))
+                    .decoration(TextDecoration.ITALIC,false)
+                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://store.crystalcaverns.net"));
             p.sendMessage(message);
         }
         else {
-            p.sendMessage("§f\uDBCB\uDDAB §bCommand usage: §7/battlepass [page]");
+            p.sendMessage("§f\uDBCB\uDDAB §bCommand usage: §7/store");
         }
         return false;
     }

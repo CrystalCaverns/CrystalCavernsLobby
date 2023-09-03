@@ -47,19 +47,19 @@ public class BattlePassCommand implements CommandExecutor {
             PanelPlaceholders placeholders = panel.placeholders;
             String progress_bar_template = "\uDBED\uDC5C\uDBFA\uDF35";
             int points = Integer.parseInt(cachedDataManager.getMetaData().getMetaValue("battle_pass_points"));
-            double level_index = ((Math.sqrt((((double) points / 100) * 8) + 1)) - 1) / 2;
+            double level_index = (double) points / 1000;
             int level = (int) Math.floor(level_index);
-            int points_for_level = (((level + 1) * level) / 2) * 100;
+            int points_for_level = level * 1000;
             int leftover_points = points - points_for_level;
             int next_level = level + 1;
-            double divider = 5.5555;
+            double divider = 55.555;
             int repeat = 0;
             //FIRST PAGE EXCEPTION
             if (page.equals(1)) {
                 //PROGRESS BAR
                 if (level == 0) {
-                    double progress_raw = points / divider;
-                    int progress = Math.toIntExact(Math.round(progress_raw));
+                    double progress_divided = points / divider;
+                    int progress = Math.toIntExact(Math.round(progress_divided));
                     repeat = repeat + progress;
                 }
                 if (level >= 1) {
@@ -92,8 +92,7 @@ public class BattlePassCommand implements CommandExecutor {
                 if (level >= 50) {
                     repeat = repeat + 18;
                 } else if (next_level == 50) {
-                    double progress_raw = (double) leftover_points / next_level;
-                    double progress_divided = progress_raw / divider;
+                    double progress_divided = leftover_points / divider;
                     int progress = Math.toIntExact(Math.round(progress_divided));
                     repeat = repeat + progress;
                 }
@@ -125,8 +124,7 @@ public class BattlePassCommand implements CommandExecutor {
                 if (level > reward && i < 7) {
                     repeat = repeat + 18;
                 } else if (reward == level && level != 0 && i < 7) {
-                    double progress_raw = (double) leftover_points / next_level;
-                    double progress_divided = progress_raw / divider;
+                    double progress_divided = leftover_points / divider;
                     int progress = Math.toIntExact(Math.round(progress_divided));
                     repeat = repeat + progress;
                 }
@@ -134,8 +132,7 @@ public class BattlePassCommand implements CommandExecutor {
                     if (level > reward) {
                         repeat = repeat + 8;
                     } else if (level == reward) {
-                        double progress_raw = (double) leftover_points / next_level;
-                        double progress_divided = progress_raw / divider;
+                        double progress_divided = leftover_points / divider;
                         int progress = Math.toIntExact(Math.round(progress_divided));
                         if (progress <= 8) {
                             repeat = repeat + progress;
@@ -148,8 +145,7 @@ public class BattlePassCommand implements CommandExecutor {
                     if (level >= reward) {
                         repeat = repeat + 8;
                     } else if (reward == next_level) {
-                        double progress_raw = (double) leftover_points / next_level;
-                        double progress_divided = progress_raw / divider;
+                        double progress_divided = leftover_points / divider;
                         int progress = Math.toIntExact(Math.round(progress_divided));
                         if (progress > 8) {
                             int progress_second = progress - 8;

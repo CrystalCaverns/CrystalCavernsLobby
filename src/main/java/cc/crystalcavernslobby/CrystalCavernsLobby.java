@@ -52,8 +52,10 @@ public final class CrystalCavernsLobby extends JavaPlugin {
                 if (player.getScoreboardTags().contains("inside_portal") && player.getEyeLocation().getBlock().getType() != Material.STRUCTURE_VOID) {
                     player.removeScoreboardTag("inside_portal");
                 }
-                if (player.getLocation().getBlockY() <= 215) {
-                    player.performCommand("spawn");
+                if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
+                    if (player.getLocation().getBlockY() <= 215) {
+                        player.performCommand("spawn");
+                    }
                 }
             }
         }, 30L, 30L);

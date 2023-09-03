@@ -10,6 +10,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 
@@ -66,6 +67,12 @@ public class PlayerInteract implements Listener {
     }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
+        if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onPlayerInteractArmorStand(PlayerArmorStandManipulateEvent e) {
         if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
             e.setCancelled(true);
         }

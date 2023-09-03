@@ -29,5 +29,6 @@ commands:
     description: Used by other plugins to send players across realms.
     permission: crystalcaverns.switchserver
   crystalcaverns:
-    description: Reloads the Crystal Caverns plugin's config.
+    description: Main plugin command.
+    aliases: [cc]
     permission: crystalcaverns.command
