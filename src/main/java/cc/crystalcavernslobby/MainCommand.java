@@ -16,12 +16,12 @@ public class MainCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (args.length == 2) {
             if ("interactions".equals(args[0])) {
-                if (args[1].equals("true")) {
+                if (args[1].equals("disable")) {
                     plugin.getConfig().set("disableInteractions", true);
                     plugin.saveConfig();
                     sender.sendMessage("§f\uDBDD\uDD29 §aInteractions are now disabled!");
                 }
-                if (args[1].equals("false")) {
+                if (args[1].equals("enable")) {
                     plugin.getConfig().set("disableInteractions", false);
                     plugin.saveConfig();
                     sender.sendMessage("§f\uDBDD\uDD29 §aInteractions are now enabled!");

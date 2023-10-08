@@ -15,6 +15,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Objects;
 
+import static cc.crystalcavernslobby.CrystalCavernsLobby.plugin;
+
 public class ClaimCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         if (!(sender instanceof Player p)) {
@@ -40,7 +42,7 @@ public class ClaimCommand implements CommandExecutor {
             if (couponsConfig.getKeys(false).contains(args[0])) {
                 if (!couponsConfig.getBoolean(args[0] + ".used")) {
                     couponsConfig.set(args[0] + ".used", true);
-                    CrystalCavernsLobby.getPlugin().saveConfig();
+                    plugin.saveConfig();
                     if (Objects.equals(couponsConfig.getString("vouchers." + args[0] + ".type"), "cap")) {
                         Bukkit.dispatchCommand(console, "lp user " + player + " meta set " + (couponsConfig.getString("vouchers." + args[0] + ".meta") + " 1"));
                         p.sendMessage("§f\uDBDD\uDD29 §aVoucher code redeemed successfully! Enjoy your reward.");

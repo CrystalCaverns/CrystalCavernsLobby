@@ -10,6 +10,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityShootBowEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.player.PlayerArmorStandManipulateEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -44,26 +46,6 @@ public class PlayerInteract implements Listener {
                 }
             }
         }
-        else {
-            if (e.hasItem()) {
-                if (e.getMaterial() == Material.GHAST_TEAR) {
-                    if (e.getItem().hasItemMeta()) {
-                        if (e.getItem().getItemMeta().hasCustomModelData()) {
-                            if (e.getItem().getItemMeta().getCustomModelData() == 5) {
-                                CommandPanelsAPI api = CommandPanels.getAPI();
-                                Player p = e.getPlayer();
-                                if (!api.isPanelOpen(p)) {
-                                    File file = new File("/home/container/plugins/CommandPanels/panels/menu.yml");
-                                    Panel panel = new Panel(file, "menu");
-                                    panel.open(p, PanelPosition.Top);
-                                    e.setCancelled(true);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
     }
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent e) {
@@ -79,6 +61,18 @@ public class PlayerInteract implements Listener {
     }
     @EventHandler
     public void onPlayerDamageEntity(EntityDamageByEntityEvent e) {
+        if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onEntityShootBow(EntityShootBowEvent e) {
+        if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
+            e.setCancelled(true);
+        }
+    }
+    @EventHandler
+    public void onProjectileLaunch(ProjectileLaunchEvent e) {
         if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
             e.setCancelled(true);
         }

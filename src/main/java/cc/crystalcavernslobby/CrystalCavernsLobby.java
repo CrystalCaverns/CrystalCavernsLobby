@@ -30,14 +30,13 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
         Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
         Objects.requireNonNull(getCommand("homes")).setExecutor(new HomesCommand());
-        Objects.requireNonNull(getCommand("treasury")).setExecutor(new TreasuryCommand());
         Objects.requireNonNull(getCommand("switchserver")).setExecutor(new SwitchServerCommand());
-        Objects.requireNonNull(getCommand("battlepass")).setExecutor(new BattlePassCommand());
+        Objects.requireNonNull(getCommand("crystalpass")).setExecutor(new CrystalPassCommand());
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand());
         Objects.requireNonNull(getCommand("menu")).setExecutor(new MenuCommand());
         Objects.requireNonNull(getCommand("store")).setExecutor(new StoreCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
-        getServer().getPluginManager().registerEvents(new MobDeath(),this);
+        getServer().getPluginManager().registerEvents(new PlayerQuit(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
         getServer().getPluginManager().registerEvents(new BlockPlace(),this);
         getServer().getPluginManager().registerEvents(new PlayerDropItem(),this);

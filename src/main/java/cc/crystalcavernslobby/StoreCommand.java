@@ -23,10 +23,7 @@ public class StoreCommand implements CommandExecutor {
                 .color(NamedTextColor.WHITE)
                 .decoration(TextDecoration.ITALIC,false)
                 .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://store.crystalcaverns.net"))
-                .append(Component.text("Click to visit our store at store.crystalcaverns.net!"))
-                    .color(TextColor.color(31743))
-                    .decoration(TextDecoration.ITALIC,false)
-                    .clickEvent(ClickEvent.clickEvent(ClickEvent.Action.OPEN_URL, "https://store.crystalcaverns.net"));
+                .append(Component.text("Click to visit our store at store.crystalcaverns.net!", TextColor.color(31743)));
             p.sendMessage(message);
         }
         else {

@@ -16,7 +16,7 @@ public class SwitchServerCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
         Player p = (Player) sender;
         p.sendTitle("\uDBEA\uDDE8", "", 10, 40, 10);
-        Bukkit.getScheduler().runTaskLater(CrystalCavernsLobby.getPlugin(), () -> {
+        Bukkit.getScheduler().runTaskLater(plugin, () -> {
             ByteArrayDataOutput out = ByteStreams.newDataOutput();
             out.writeUTF("Connect");
             out.writeUTF(args[0]);

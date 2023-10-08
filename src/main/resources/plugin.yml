@@ -14,10 +14,8 @@ commands:
   homes:
     description: Opens the Homes menu.
     aliases: [waypoints, landmarks]
-  treasury:
-    description: Opens the your Treasury.
-  battlepass:
-    description: Opens the Battle Pass menu.
+  crystalpass:
+    description: Opens the Crystal Pass menu.
   menu:
     description: Opens the Crystal Caverns main menu.
   store:
