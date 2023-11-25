@@ -1,6 +1,7 @@
 package cc.crystalcavernslobby;
 
 import cc.crystalcavernslobby.NMS.Credits;
+import fr.mrmicky.fastboard.FastBoard;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.title.Title;
 import net.milkbowl.vault.permission.Permission;
@@ -30,9 +31,11 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Objects.requireNonNull(getCommand("profile")).setExecutor(new ProfileCommand());
         Objects.requireNonNull(getCommand("credits")).setExecutor(new CreditsCommand());
         Objects.requireNonNull(getCommand("homes")).setExecutor(new HomesCommand());
-        Objects.requireNonNull(getCommand("switchserver")).setExecutor(new SwitchServerCommand());
         Objects.requireNonNull(getCommand("crystalpass")).setExecutor(new CrystalPassCommand());
         Objects.requireNonNull(getCommand("spawn")).setExecutor(new SpawnCommand());
+        Objects.requireNonNull(getCommand("purchase")).setExecutor(new PurchaseCommand());
+        Objects.requireNonNull(getCommand("reward")).setExecutor(new RewardCommand());
+        Objects.requireNonNull(getCommand("points")).setExecutor(new PointsCommand());
         Objects.requireNonNull(getCommand("menu")).setExecutor(new MenuCommand());
         Objects.requireNonNull(getCommand("store")).setExecutor(new StoreCommand());
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
@@ -45,11 +48,13 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         Credits.init();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
             for (Player player : Bukkit.getOnlinePlayers()) {
-                if (player.getEyeLocation().getBlock().getType() == Material.STRUCTURE_VOID) {
-                    player.showTitle(Title.title(Component.text("\uDBEA\uDDE8"),Component.empty(),Title.Times.times(Duration.ZERO,Duration.ofMillis(2000),Duration.ofMillis(500))));
-                }
-                if (player.getScoreboardTags().contains("inside_portal") && player.getEyeLocation().getBlock().getType() != Material.STRUCTURE_VOID) {
-                    player.removeScoreboardTag("inside_portal");
+                if (player.getScoreboardTags().contains("inside_portal")) {
+                    if (player.getEyeLocation().getBlock().getType() == Material.STRUCTURE_VOID) {
+                        player.showTitle(Title.title(Component.text("\uDBEA\uDDE8"), Component.empty(), Title.Times.times(Duration.ZERO, Duration.ofMillis(2000), Duration.ofMillis(500))));
+                    }
+                    if (player.getEyeLocation().getBlock().getType() != Material.STRUCTURE_VOID) {
+                        player.removeScoreboardTag("inside_portal");
+                    }
                 }
                 if (Boolean.parseBoolean(plugin.getConfig().getString("disableInteractions"))) {
                     if (player.getLocation().getBlockY() <= 215) {
@@ -63,4 +68,10 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         return plugin;
     }
     public static JavaPlugin plugin;
+    
+    public static void dialog(Player player, String row1, String row2, String row3, String row4, String row5, String row6) {
+        FastBoard board = new FastBoard(player);
+        board.updateLines("\uDBE5\uDC3A" + row1,"\uDBE5\uDC3B" + row2,"\uDBE5\uDC3C" + row3,"\uDBE5\uDC3D" + row4,"\uDBE5\uDC3E" + row5,"\uDBE5\uDC3F" + row6,"\uDBE5\uDC9A\uDBCD\uDE10");
+        Bukkit.getScheduler().runTaskLater(plugin, board::delete, 200L);
+    }
 }

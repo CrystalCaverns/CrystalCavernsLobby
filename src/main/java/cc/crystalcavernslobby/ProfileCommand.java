@@ -16,6 +16,9 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.bukkit.Bukkit.getOfflinePlayer;
 import static org.bukkit.Bukkit.getPlayer;
@@ -52,14 +55,28 @@ public class ProfileCommand implements CommandExecutor {
                 placeholders.addPlaceholder("target_player", target_player_name);
                 User lpUser = lp_api.getPlayerAdapter(Player.class).getUser(target_player);
                 CachedMetaData metaData = lpUser.getCachedData().getMetaData();
+                CrystalCavernsLobby.getPermissions();
+                //THEME
+                List<String> profileTheme = new ArrayList<>(Arrays.asList(metaData.getMetaValue("profile_theme").split(";")));
+                placeholders.addPlaceholder("profile_color", profileTheme.get(0));
+                placeholders.addPlaceholder("profile_theme", profileTheme.get(1));
+                placeholders.addPlaceholder("profile_theme_name", profileTheme.get(2));
                 //NAME
-                placeholders.addPlaceholder("profile_color", metaData.getMetaValue("profile_color"));
-                placeholders.addPlaceholder("profile_theme", metaData.getMetaValue("profile_theme"));
-                placeholders.addPlaceholder("profile_theme_name", metaData.getMetaValue("profile_theme_name"));
+                placeholders.addPlaceholder("title", metaData.getMetaValue("title"));
                 placeholders.addPlaceholder("color", metaData.getMetaValue("color"));
                 placeholders.addPlaceholder("color_name", metaData.getMetaValue("color_name"));
                 placeholders.addPlaceholder("rank", metaData.getMetaValue("rank"));
                 placeholders.addPlaceholder("nameplate", metaData.getMetaValue("nameplate"));
+                //MEDALS
+                for (int i = 1; i <= 5; i++) {
+                    if (metaData.getMetaValue("medal" + i) != null) {
+                        List<String> medal_data = new ArrayList<>(Arrays.asList(metaData.getMetaValue("medal" + i).split(";")));
+                        placeholders.addPlaceholder("medal" + i, "true");
+                        placeholders.addPlaceholder("medal" + i + "_customdata", medal_data.get(0));
+                        placeholders.addPlaceholder("medal" + i + "_name", medal_data.get(1));
+                        placeholders.addPlaceholder("medal" + i + "_lore", medal_data.get(2));
+                    }
+                }
                 //DISCORD
                 String discord_link = PlaceholderAPI.setPlaceholders(target_player,"%discordsrv_user_islinked%");
                 String discord_name = PlaceholderAPI.setPlaceholders(target_player,"%discordsrv_user_name%");

@@ -3,7 +3,7 @@ author: 'japicraft'
 version: '${project.version}'
 main: cc.crystalcavernslobby.CrystalCavernsLobby
 api-version: '1.20'
-depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms]
+depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms,UltimateAdvancementAPI]
 commands:
   claim:
     description: Used to claim a special voucher code.
@@ -21,12 +21,18 @@ commands:
   store:
     description: Gives a link to the Crystal Caverns store.
   spawn:
-    description: Teleport the player to the server's global spawn point.
+    description: Teleports the player to the server's global spawn point.
     aliases: [lobby, hub]
-  switchserver:
-    description: Used by other plugins to send players across realms.
-    permission: crystalcaverns.switchserver
+  purchase:
+    description: Used for internal processes.
+    permission: crystalcaverns.command.purchase
+  reward:
+    description: Used for internal processes.
+    permission: crystalcaverns.command.reward
+  points:
+    description: Used for internal processes.
+    permission: crystalcaverns.command.points
   crystalcaverns:
-    description: Main plugin command.
+    description: Used for internal processes.
     aliases: [cc]
-    permission: crystalcaverns.command
+    permission: crystalcaverns.command.main

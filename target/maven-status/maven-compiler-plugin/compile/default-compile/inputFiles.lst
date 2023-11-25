@@ -1,9 +1,9 @@
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\HomesCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PlayerDropItem.java
+C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PurchaseCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\CrystalPassCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PlayerQuit.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\NMS\Credits.java
-C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\SwitchServerCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\BlockPlace.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\NMS\impl\Modern.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PlayerInteract.java
@@ -17,5 +17,7 @@ C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernsl
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\CreditsCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\MenuCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PlayerJoin.java
+C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\RewardCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\MainCommand.java
+C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\PointsCommand.java
 C:\Users\jirik\IdeaProjects\CrystalCavernsLobby\src\main\java\cc\crystalcavernslobby\NMS\ICredits.java

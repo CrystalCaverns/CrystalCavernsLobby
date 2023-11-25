@@ -1,11 +1,15 @@
 package cc.crystalcavernslobby;
 
+import net.kyori.adventure.text.Component;
+import net.kyori.adventure.title.Title;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
+
+import java.time.Duration;
 
 import static cc.crystalcavernslobby.CrystalCavernsLobby.plugin;
 
@@ -14,25 +18,9 @@ public class SpawnCommand implements CommandExecutor {
         if (!(sender instanceof Player)) {
             sender.sendMessage("§cOnly a player can execute this command!");
         }
-        boolean is_op1 = sender.isOp();
-        try {
-            sender.setOp(true);
-            plugin.getServer().dispatchCommand(sender,"gizmo fade 10 40 10");
-            sender.setOp(is_op1);
-        } catch (Exception exception) {
-            sender.setOp(is_op1);
-            sender.sendMessage("SUPER RARE ERROR! PLEASE REPORT IMMEDIATELY! ID: SpawnCommand Rare Error");
-        }
-        Bukkit.getScheduler().runTaskLater(plugin, () -> {
-            boolean is_op2 = sender.isOp();
-            try {
-                sender.setOp(true);
-                plugin.getServer().dispatchCommand(sender,"warp Spawn");
-                sender.setOp(is_op2);
-            } catch (Exception exception) {
-                sender.setOp(is_op2);
-                sender.sendMessage("SUPER RARE ERROR! PLEASE REPORT IMMEDIATELY! ID: SpawnCommand Rare Error");
-            }}, 20L);
+        Player player = (Player) sender;
+        player.showTitle(Title.title(Component.text("\uDBEA\uDDE8"), Component.empty(), Title.Times.times(Duration.ofMillis(500), Duration.ofMillis(2000), Duration.ofMillis(500))));
+        Bukkit.getScheduler().runTaskLater(plugin, () -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(),"warp Spawn " + player.getName()), 20L);
         return false;
     }
 }

@@ -19,10 +19,10 @@ import java.io.IOException;
 
 public class CrystalPassCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
-        if (!(sender instanceof Player)) {
+        if (!(sender instanceof Player p)) {
             sender.sendMessage("§cOnly a player can execute this command!");
+            return false;
         }
-        Player p = (Player) sender;
         if (args.length <= 1) {
             Integer page = 1;
             if (args.length == 1 && args[0].matches("[1-7]")) {
@@ -37,7 +37,7 @@ public class CrystalPassCommand implements CommandExecutor {
             } catch (IOException | InvalidConfigurationException e) {
                 throw new RuntimeException(e);
             }
-            if (cachedDataManager.getPermissionData().checkPermission("plus_crystal_pass").asBoolean()) {
+            if (cachedDataManager.getPermissionData().checkPermission("crystal_pass_plus").asBoolean()) {
                 File file = new File("/home/container/plugins/CommandPanels/panels/crystal_pass_plus_" + page + ".yml");
                 panel = new Panel(file, "crystal_pass_plus_" + page);
             } else {
@@ -79,6 +79,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward0_lore4", CrystalPassConfig.getString("free.reward0.lore.line4"));
                 placeholders.addPlaceholder("reward0_lore5", CrystalPassConfig.getString("free.reward0.lore.line5"));
                 placeholders.addPlaceholder("reward0_customdata", CrystalPassConfig.getString("free.reward0.customdata"));
+                placeholders.addPlaceholder("reward0_leatherarmor", CrystalPassConfig.getString("free.reward0.leatherarmor"));
                 placeholders.addPlaceholder("reward0_command", CrystalPassConfig.getString("free.reward0.command"));
                 //PLUS REWARD
                 placeholders.addPlaceholder("plus_reward0_material", CrystalPassConfig.getString("plus.reward0.material"));
@@ -89,6 +90,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("plus_reward0_lore4", CrystalPassConfig.getString("plus.reward0.lore.line4"));
                 placeholders.addPlaceholder("plus_reward0_lore5", CrystalPassConfig.getString("plus.reward0.lore.line5"));
                 placeholders.addPlaceholder("plus_reward0_customdata", CrystalPassConfig.getString("plus.reward0.customdata"));
+                placeholders.addPlaceholder("plus_reward0_leatherarmor", CrystalPassConfig.getString("plus.reward0.leatherarmor"));
                 placeholders.addPlaceholder("plus_reward0_command", CrystalPassConfig.getString("plus.reward0.command"));
             }
             //LAST PAGE EXCEPTION
@@ -100,7 +102,9 @@ public class CrystalPassCommand implements CommandExecutor {
                     int progress = Math.toIntExact(Math.round(progress_divided));
                     repeat = repeat + progress;
                 }
-                placeholders.addPlaceholder("reward50_cost", String.valueOf(50 * level_cost));
+                placeholders.addPlaceholder("reward50_cost", String.valueOf((50 * level_cost) - (level * level_cost)));
+                placeholders.addPlaceholder("reward50_tiers", String.valueOf(50 - level));
+                placeholders.addPlaceholder("reward50_tier", String.valueOf(50));
                 //FREE REWARD
                 placeholders.addPlaceholder("reward50_material", CrystalPassConfig.getString("free.reward50.material"));
                 placeholders.addPlaceholder("reward50_name", CrystalPassConfig.getString("free.reward50.name"));
@@ -110,6 +114,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward50_lore4", CrystalPassConfig.getString("free.reward50.lore.line4"));
                 placeholders.addPlaceholder("reward50_lore5", CrystalPassConfig.getString("free.reward50.lore.line5"));
                 placeholders.addPlaceholder("reward50_customdata", CrystalPassConfig.getString("free.reward50.customdata"));
+                placeholders.addPlaceholder("reward50_leatherarmor", CrystalPassConfig.getString("free.reward50.leatherarmor"));
                 placeholders.addPlaceholder("reward50_command", CrystalPassConfig.getString("free.reward50.command"));
                 //PLUS REWARD
                 placeholders.addPlaceholder("plus_reward50_material", CrystalPassConfig.getString("plus.reward50.material"));
@@ -120,6 +125,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("plus_reward50_lore4", CrystalPassConfig.getString("plus.reward50.lore.line4"));
                 placeholders.addPlaceholder("plus_reward50_lore5", CrystalPassConfig.getString("plus.reward50.lore.line5"));
                 placeholders.addPlaceholder("plus_reward50_customdata", CrystalPassConfig.getString("plus.reward50.customdata"));
+                placeholders.addPlaceholder("plus_reward50_leatherarmor", CrystalPassConfig.getString("plus.reward50.leatherarmor"));
                 placeholders.addPlaceholder("plus_reward50_command", CrystalPassConfig.getString("plus.reward50.command"));
             }
             //HANDLE ALL OTHER PAGES
@@ -159,7 +165,9 @@ public class CrystalPassCommand implements CommandExecutor {
                         }
                     }
                 }
-                placeholders.addPlaceholder("reward" + reward + "_cost", String.valueOf(reward * level_cost));
+                placeholders.addPlaceholder("reward" + reward + "_cost", String.valueOf((reward * level_cost) - (level * level_cost)));
+                placeholders.addPlaceholder("reward" + reward + "_tiers", String.valueOf(reward - level));
+                placeholders.addPlaceholder("reward" + reward + "_tier", String.valueOf(reward));
                 //FREE REWARD
                 placeholders.addPlaceholder("reward" + reward + "_material", CrystalPassConfig.getString("free.reward" + reward + ".material"));
                 placeholders.addPlaceholder("reward" + reward + "_name", CrystalPassConfig.getString("free.reward" + reward + ".name"));
@@ -169,6 +177,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("reward" + reward + "_lore4", CrystalPassConfig.getString("free.reward" + reward + ".lore.line4"));
                 placeholders.addPlaceholder("reward" + reward + "_lore5", CrystalPassConfig.getString("free.reward" + reward + ".lore.line5"));
                 placeholders.addPlaceholder("reward" + reward + "_customdata", CrystalPassConfig.getString("free.reward" + reward + ".customdata"));
+                placeholders.addPlaceholder("reward" + reward + "_leatherarmor", CrystalPassConfig.getString("free.reward" + reward + ".leatherarmor"));
                 placeholders.addPlaceholder("reward" + reward + "_command", CrystalPassConfig.getString("free.reward" + reward + ".command"));
                 //PLUS REWARD
                 placeholders.addPlaceholder("plus_reward" + reward + "_material", CrystalPassConfig.getString("plus.reward" + reward + ".material"));
@@ -179,6 +188,7 @@ public class CrystalPassCommand implements CommandExecutor {
                 placeholders.addPlaceholder("plus_reward" + reward + "_lore4", CrystalPassConfig.getString("plus.reward" + reward + ".lore.line4"));
                 placeholders.addPlaceholder("plus_reward" + reward + "_lore5", CrystalPassConfig.getString("plus.reward" + reward + ".lore.line5"));
                 placeholders.addPlaceholder("plus_reward" + reward + "_customdata", CrystalPassConfig.getString("plus.reward" + reward + ".customdata"));
+                placeholders.addPlaceholder("plus_reward" + reward + "_leatherarmor", CrystalPassConfig.getString("plus.reward" + reward + ".leatherarmor"));
                 placeholders.addPlaceholder("plus_reward" + reward + "_command", CrystalPassConfig.getString("plus.reward" + reward + ".command"));
             }
             String progress_bar = progress_bar_template.repeat(repeat);

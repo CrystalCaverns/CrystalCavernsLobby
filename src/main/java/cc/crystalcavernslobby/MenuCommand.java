@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.regex.Pattern;
 
 public class MenuCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
@@ -25,18 +24,8 @@ public class MenuCommand implements CommandExecutor {
         String character = "\uDBDC\uDD87";
         String coins_text = PlaceholderAPI.setPlaceholders(p,"%coinsengine_balance_rounded_coins%");
         String gemstones_text = PlaceholderAPI.setPlaceholders(p,"%coinsengine_balance_rounded_gemstones%");
-        int coins;
-        if (!Pattern.matches(",",coins_text)) {
-            coins = Integer.parseInt(coins_text.replaceAll(",",""));
-        } else {
-            coins = Integer.parseInt(coins_text);
-        }
-        int gemstones;
-        if (!Pattern.matches(",",gemstones_text)) {
-            gemstones = Integer.parseInt(gemstones_text.replaceAll(",",""));
-        } else {
-            gemstones = Integer.parseInt(gemstones_text);
-        }
+        int coins = Integer.parseInt(coins_text.replaceAll(",",""));
+        int gemstones = Integer.parseInt(gemstones_text.replaceAll(",",""));
         int coins_length = String.valueOf(coins).length();
         int gemstones_length = String.valueOf(gemstones).length();
         String coins_chars = character.repeat(7 - coins_length);
