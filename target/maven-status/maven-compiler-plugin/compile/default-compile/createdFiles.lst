@@ -4,6 +4,7 @@ cc\crystalcavernslobby\ProfileCommand.class
 cc\crystalcavernslobby\PlayerInteract.class
 cc\crystalcavernslobby\BossLoot.class
 cc\crystalcavernslobby\NMS\ICredits.class
+cc\crystalcavernslobby\CloseInventory.class
 cc\crystalcavernslobby\NMS\Credits.class
 cc\crystalcavernslobby\PurchaseCommand.class
 cc\crystalcavernslobby\CreditsCommand.class

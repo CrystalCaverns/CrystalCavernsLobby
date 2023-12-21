@@ -12,10 +12,20 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.util.Objects;
 
 public final class CrystalCavernsLobby extends JavaPlugin {
+    public static Connection connection;
+    private String host;
+    private String database;
+    private String username;
+    private String password;
+    private int port;
     public static Permission perms = null;
     public static void getPermissions() {}
     private void setupPermissions() {
@@ -41,9 +51,15 @@ public final class CrystalCavernsLobby extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoin(),this);
         getServer().getPluginManager().registerEvents(new PlayerQuit(),this);
         getServer().getPluginManager().registerEvents(new PlayerInteract(),this);
+        getServer().getPluginManager().registerEvents(new CloseInventory(),this);
         getServer().getPluginManager().registerEvents(new BlockPlace(),this);
         getServer().getPluginManager().registerEvents(new PlayerDropItem(),this);
-        getLogger().info("Crystal Caverns Lobby plugin loaded successfully!");
+        host = this.getConfig().getString("host");
+        database = this.getConfig().getString("database");
+        username = this.getConfig().getString("username");
+        password = this.getConfig().getString("password");
+        port = this.getConfig().getInt("port");
+        setupDatabase();
         setupPermissions();
         Credits.init();
         Bukkit.getScheduler().runTaskTimer(this, () -> {
@@ -63,6 +79,58 @@ public final class CrystalCavernsLobby extends JavaPlugin {
                 }
             }
         }, 30L, 30L);
+        getLogger().info("Crystal Caverns Lobby plugin loaded successfully!");
+    }
+    @Override
+    public void onDisable() {
+        try {
+            if (getConnection() != null && !getConnection().isClosed()) {
+                getConnection().close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    private void setupDatabase() {
+        try {
+            synchronized (this) {
+                if (getConnection() != null && !getConnection().isClosed()) {
+                    return;
+                }
+                Class.forName("com.mysql.jdbc.Driver");
+                setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password));
+                Bukkit.getConsoleSender().sendMessage("Database Connected!");
+                Bukkit.getScheduler().runTaskTimerAsynchronously(plugin, () -> {
+                    try {
+                        if (getConnection() != null) {
+                            if (getConnection().isClosed()) {
+                                setConnection(DriverManager.getConnection("jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database, this.username, this.password));
+                                Bukkit.getConsoleSender().sendMessage("Database reconnected!");
+                            } else {
+                                getConnection().createStatement().executeQuery("/* ping */ SELECT 1");
+                            }
+                        }
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                    }
+                }, 6000L, 6000L);
+                
+            }
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        try {
+            PreparedStatement ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS virtualchest (uuid TEXT, itemstack BLOB)");
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public static Connection getConnection() {
+        return connection;
+    }
+    public static void setConnection(Connection connection) {
+        CrystalCavernsLobby.connection = connection;
     }
     public static Plugin getPlugin() {
         return plugin;

@@ -3,7 +3,7 @@ author: 'japicraft'
 version: '${project.version}'
 main: cc.crystalcavernslobby.CrystalCavernsLobby
 api-version: '1.20'
-depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms,UltimateAdvancementAPI]
+depend: [PlaceholderAPI,Vault,CommandPanels,ProtocolLib,LuckPerms]
 commands:
   claim:
     description: Used to claim a special voucher code.

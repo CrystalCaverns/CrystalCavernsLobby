@@ -8,19 +8,27 @@ import net.luckperms.api.cacheddata.CachedMetaData;
 import net.luckperms.api.model.user.User;
 import net.luckperms.api.node.NodeType;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.util.io.BukkitObjectInputStream;
 import org.jetbrains.annotations.NotNull;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
+import java.io.IOException;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static cc.crystalcavernslobby.CrystalCavernsLobby.perms;
-import static cc.crystalcavernslobby.CrystalCavernsLobby.plugin;
+import static cc.crystalcavernslobby.CrystalCavernsLobby.*;
 
 public class MainCommand implements CommandExecutor {
     public boolean onCommand(@NotNull CommandSender sender, @NotNull Command cmd, @NotNull String label, String[] args) {
@@ -39,8 +47,35 @@ public class MainCommand implements CommandExecutor {
             }
             return false;
         }
-        CrystalCavernsLobby.getPermissions();
         Player player = Bukkit.getPlayer(args[1]);
+        if ("transportloot".equals(args[0])) {
+            //Check if connection is open
+            try {
+                if (getConnection() == null || getConnection().isClosed()) {
+                    player.sendMessage(ChatColor.WHITE + "\uDBF7\uDC35 " + ChatColor.RED + "Uh oh, that's an error on our side. Please report this as a bug on our Discord server as soon as possible. ErrorCode: DBConnectionOfflineLobby");
+                    return true;
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            Inventory inv = Bukkit.createInventory(player, 9, (ChatColor.WHITE + "\uDBC7\uDCB8\uDBE6\uDE62"));
+            //Load items from database
+            try {
+                PreparedStatement ps = connection.prepareStatement("SELECT itemstack FROM virtualchest WHERE uuid = ?");
+                ps.setString(1, player.getUniqueId().toString());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    byte[] itemBytes = rs.getBytes("itemstack");
+                    ItemStack item = fromByteArray(itemBytes);
+                    inv.addItem(item);
+                }
+            } catch (SQLException | IOException | ClassNotFoundException e) {
+                e.printStackTrace();
+            }
+            player.openInventory(inv);
+            return false;
+        }
+        CrystalCavernsLobby.getPermissions();
         User user = LuckPermsProvider.get().getPlayerAdapter(Player.class).getUser(player);
         if ("nameplate".equals(args[0])) {
             user.data().clear(NodeType.META.predicate(mn -> mn.getMetaKey().equals("nameplate")));
@@ -94,5 +129,11 @@ public class MainCommand implements CommandExecutor {
             return false;
         }
         return false;
+    }
+    public static ItemStack fromByteArray(byte[] bytes) throws IOException, ClassNotFoundException {
+        try (ByteArrayInputStream bis = new ByteArrayInputStream(bytes);
+             BukkitObjectInputStream ois = new BukkitObjectInputStream(bis)) {
+            return (ItemStack) ois.readObject();
+        }
     }
 }
